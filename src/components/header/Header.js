@@ -4,6 +4,10 @@ import OffCanvas from '../offcanvas/OffCanvas';
 
 // Styles for the header component
 const StyledHeader = styled.header`
+  margin-bottom: 1rem;
+  a {
+    color: #000;
+  }
   .container-fluid {
     height: 6.5rem;
     background-color: #fff;
