@@ -44,8 +44,33 @@ h6 {
   font-size: 1.2rem;
 }
 
+p {
+  font-size: 1.6rem;
+  color: #616362;
+}
+
+a {
+  text-decoration: none;
+  color: #608677;
+  font-size: 1.6rem;
+}
+
+/* Structure */
+/* main container */
+.container {
+  width: 90%;
+  margin: 0 auto;
+}
+
+/* full width container */
+.container-fluid {
+  width: 100%;
+  margin: 0 auto;
+}
+
 /* Breakpoints */
 @media (min-width: 576px) {
+  /* Typography */
   h1 {
   }
   h2 {
@@ -57,6 +82,11 @@ h6 {
   h5 {
   }
   h6 {
+  }
+
+  /* Structure */
+  .container {
+    width: 80%;
   }
 }
 
