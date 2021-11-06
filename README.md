@@ -1,1 +1,1 @@
-# vego-recipe-app
+# Vego: Plant-based Recipe App
