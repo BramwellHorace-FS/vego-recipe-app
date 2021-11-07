@@ -1,10 +1,41 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router';
 import Hero from '../components/hero/Hero';
+import Card from '../components/card/Card';
+import styled from 'styled-components';
+
+const MainStyled = styled.main`
+  display: flex;
+  flex-flow: column nowrap;
+  row-gap: 3rem;
+  overflow: hidden;
+  margin-bottom: 5rem;
+  animation: fadeIn 1s ease-in forwards;
+
+  .recipes {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    row-gap: 3rem;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+`;
 
 // Homepage component for the application
 function Home() {
 
-  // state for recipes 
+  let history = useHistory();
+
+  // state for recipes
   const [recipes, setRecipes] = useState([]);
 
   // state for gathering search input
@@ -32,21 +63,43 @@ function Home() {
     e.preventDefault();
     setQuery(search);
     setSearch('');
+    history.push({
+      pathname: '/search',
+      state: {
+        searchTerm: search
+      }
+    });
+    ;
   };
-
-  //https://api.edamam.com/api/recipes/v2?type=public&q=${query}&app_id=${APP_ID}&app_key=${APP_KEY}&health=vegetarian
 
   // function used to get recipes from the api
   const getRecipes = async () => {
-    const response = await fetch(``);
+    const response = await fetch(`https://api.edamam.com/api/recipes/v2?type=public&q=${query}&app_id=${APP_ID}&app_key=${APP_KEY}&health=vegetarian`);
     const data = await response.json();
+    console.log(data);
     setRecipes(data.hits);
+    console.log(recipes);
   };
-
 
   return (
     <div className="container-fluid">
-      <Hero />
+      <Hero func={getSearch} value={search} update={updateSearch} />
+      <MainStyled>
+        <h4>Recipes of The Day</h4>
+        <div className="recipes">
+          {recipes.map((recipe, i) => (
+            <Card
+              title={recipe.recipe.label}
+              image={recipe.recipe.image}
+              type={recipe.recipe.mealType}
+              time={recipe.recipe.totalTime}
+              url={recipe.recipe.url}
+              ingredients={recipe.recipe.ingredientLines}
+              key={i}
+            />
+          ))}
+        </div>
+      </MainStyled>
     </div>
   );
 }

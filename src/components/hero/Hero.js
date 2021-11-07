@@ -2,12 +2,12 @@ import React from 'react';
 import styled from 'styled-components';
 import image from '../../images/plate.png';
 import Form from '../form/Form';
-import Button from '../button/Button';
 
 // Styles for the Hero component
 const StyledHero = styled.div`
   animation: fadeIn 0.3s ease-in;
   overflow: hidden;
+  margin-bottom: 3rem;
 
   .search {
     background: #e6e8de;
@@ -19,6 +19,7 @@ const StyledHero = styled.div`
 
     img {
         width: 100%;
+        animation: slideIn 0.5s linear;
     }
 
     .intro {
@@ -28,14 +29,21 @@ const StyledHero = styled.div`
     }
   }
 
+  @keyframes slideIn {
+   from {
+      transform: translateX(100%) rotate(180deg);
+   }
+   to {
+      transform: translateX(0) rotate(0deg);
+   }
+  }
+
   @keyframes fadeIn {
     from {
       opacity: 0;
-      transform: translateY(10rem);
     }
     to {
       opacity: 1;
-      transform: translateY(0);
     }
   }
 
@@ -67,14 +75,14 @@ const StyledHero = styled.div`
 `;
 
 // Hero component - represents the hero section of the app (the first section)
-const Hero = ({}) => {
+const Hero = ({ func, value, update }) => {
   return (
     <StyledHero className="container-fluid">
       <div className="search">
         <div className="intro">
           <h2>Quick, Easy & Delicious Plant-based Recipes</h2>
           <p>Exlpore our collection of plant-based recipes to compliment your healthy lifestyle.</p>
-          <Form />
+          <Form func={func} value={value} update={update} />
         </div>
         <div className="image">
           <img src={image} alt="plate" />

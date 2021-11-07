@@ -28,11 +28,11 @@ const StyledForm = styled.form`
 `;
 
 // Form component used for recipe search
-function Form() {
+function Form({ func, value, update }) {
   return (
-    <StyledForm>
+    <StyledForm onSubmit={func}>
       <BsSearch className="search-icon" />
-      <input type="search" name="search" id="search" placeholder="" />
+      <input type="search" name="search" id="search" placeholder="Search recipes" value={value} onChange={update}/>
     </StyledForm>
   );
 }

@@ -12,6 +12,9 @@
 body {
   font-family: 'Codec Pro', sans-serif;
   font-size: 62.5%;
+  background: #f2f3f1;
+  height: 100%;
+  min-height: 100vh;
 }
 /* Typography */
 h1,
@@ -25,7 +28,7 @@ h6 {
 }
 
 h1 {
-  font-size: 3.8rem;
+  font-size: 2.8rem;
 }
 h2 {
   font-size: 2.8rem;
@@ -61,12 +64,15 @@ a {
 .container {
   width: 90%;
   margin: 0 auto;
+  height: 100%;
+
 }
 
 /* full width container */
 .container-fluid {
   width: 100%;
   margin: 0 auto;
+  height: 100%;
 }
 
 /* Breakpoints */
