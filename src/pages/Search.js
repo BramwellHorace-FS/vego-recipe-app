@@ -12,7 +12,7 @@ const MainStyled = styled.main`
   margin-bottom: 5rem;
   height: 100%;
   min-height: 100vh;
-  animation: fadeIn 1s ease-in forwards;; 
+  animation: fadeIn 1s ease-in forwards;
 
   .recipes {
     display: flex;
@@ -34,10 +34,10 @@ const MainStyled = styled.main`
 `;
 
 const StyledHeader = styled.header`
-    display: flex;
-    flex-flow: column nowrap;
-    row-gap: 1rem;
-    margin-bottom: 2rem;
+  display: flex;
+  flex-flow: column nowrap;
+  row-gap: 1rem;
+  margin-bottom: 2rem;
 `;
 
 // Search page component for the search page of the application
@@ -94,17 +94,19 @@ function Search() {
 
   // fetch the search results
   const getRecipes = async () => {
-    const response = await fetch(`https://api.edamam.com/api/recipes/v2?type=public&q=${query}&app_id=${APP_ID}&app_key=${APP_KEY}&health=vegetarian`);
-    const data = await response.json();
-    console.log(data);
-    setRecipes(data.hits);
-    console.log(recipes);
+    try {
+      const response = await fetch(`https://api.edamam.com/api/recipes/v2?type=public&q=${query}&app_id=${APP_ID}&app_key=${APP_KEY}&health=vegetarian`);
+      const data = await response.json();
+      setRecipes(data.hits);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
     <div className="container-fluid">
       <StyledHeader>
-        <h1>Search</h1>
+        <h1>Explore Recipes</h1>
         <p>{results}</p>
       </StyledHeader>
       <Form func={getSearch} value={search} update={updateSearch} />

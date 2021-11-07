@@ -2,11 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router';
 import Hero from '../components/hero/Hero';
 import Card from '../components/card/Card';
+import Button from '../components/button/Button';
 import styled from 'styled-components';
 
 const MainStyled = styled.main`
   display: flex;
   flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
   row-gap: 3rem;
   overflow: hidden;
   margin-bottom: 5rem;
@@ -32,7 +35,6 @@ const MainStyled = styled.main`
 
 // Homepage component for the application
 function Home() {
-
   let history = useHistory();
 
   // state for recipes
@@ -66,19 +68,20 @@ function Home() {
     history.push({
       pathname: '/search',
       state: {
-        searchTerm: search
-      }
+        searchTerm: search,
+      },
     });
-    ;
   };
 
   // function used to get recipes from the api
   const getRecipes = async () => {
-    const response = await fetch(`https://api.edamam.com/api/recipes/v2?type=public&q=${query}&app_id=${APP_ID}&app_key=${APP_KEY}&health=vegetarian`);
-    const data = await response.json();
-    console.log(data);
-    setRecipes(data.hits);
-    console.log(recipes);
+    try {
+      const response = await fetch(`https://api.edamam.com/api/recipes/v2?type=public&q=${query}&app_id=${APP_ID}&app_key=${APP_KEY}&health=vegetarian`);
+      const data = await response.json();
+      setRecipes(data.hits);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -87,7 +90,7 @@ function Home() {
       <MainStyled>
         <h4>Recipes of The Day</h4>
         <div className="recipes">
-          {recipes.map((recipe, i) => (
+          {recipes.slice(0,8).map((recipe, i) => (
             <Card
               title={recipe.recipe.label}
               image={recipe.recipe.image}
@@ -99,6 +102,12 @@ function Home() {
             />
           ))}
         </div>
+        <Button
+          text="Explore more recipes"
+          click={() => {
+            history.push('/search');
+          }}
+        />
       </MainStyled>
     </div>
   );

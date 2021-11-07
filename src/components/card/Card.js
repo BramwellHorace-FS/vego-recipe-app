@@ -14,6 +14,9 @@ const CardStyled = styled.article`
 
   &:hover {
     animation: scaleUp 0.5s linear forwards;
+    h2 {
+      color: #000;
+    }
   }
 
   header {
@@ -22,6 +25,7 @@ const CardStyled = styled.article`
     h2 {
       font-size: 1.5rem;
       line-height: 2rem;
+      color: #616362;
     }
 
     .meta {
