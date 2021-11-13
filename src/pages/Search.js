@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import Form from '../components/form/Form';
 import Card from '../components/card/Card';
 import styled from 'styled-components';
+import Modal from '../components/modal/Modal';
 
 const MainStyled = styled.main`
   display: flex;
@@ -62,6 +63,7 @@ function Search() {
   const [search, setSearch] = useState('');
   const [query, setQuery] = useState(searchQuery);
   const [results, setResults] = useState('Search our collection of plant-based recipes.');
+  const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
     if (location.state) {
@@ -97,9 +99,12 @@ function Search() {
     try {
       const response = await fetch(`https://api.edamam.com/api/recipes/v2?type=public&q=${query}&app_id=${APP_ID}&app_key=${APP_KEY}&health=vegetarian`);
       const data = await response.json();
+      if(data.hits.length === 0) {
+        setResults('No results found. Please try again.');
+      }
       setRecipes(data.hits);
     } catch (error) {
-      console.log(error);
+      setOpenModal(true);
     }
   };
 
@@ -125,6 +130,7 @@ function Search() {
           ))}
         </div>
       </MainStyled>
+      {openModal && <Modal closeModal={setOpenModal} />}
     </div>
   );
 }

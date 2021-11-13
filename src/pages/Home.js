@@ -4,6 +4,7 @@ import Hero from '../components/hero/Hero';
 import Card from '../components/card/Card';
 import Button from '../components/button/Button';
 import styled from 'styled-components';
+import Modal from '../components/modal/Modal';
 
 const MainStyled = styled.main`
   display: flex;
@@ -46,6 +47,9 @@ function Home() {
   // state for gathering the search results
   const [query, setQuery] = useState('');
 
+  // state for the modal
+  const [openModal, setOpenModal] = useState(false);
+
   // Api ID and key for requesting recipes from the api
   const APP_ID = 'e7d8c517';
   const APP_KEY = '8aa35c072a105b7ce520481ea77454d7';
@@ -73,6 +77,7 @@ function Home() {
     });
   };
 
+
   // function used to get recipes from the api
   const getRecipes = async () => {
     try {
@@ -80,7 +85,7 @@ function Home() {
       const data = await response.json();
       setRecipes(data.hits);
     } catch (error) {
-      console.log(error);
+      setOpenModal(true);
     }
   };
 
@@ -109,6 +114,7 @@ function Home() {
           }}
         />
       </MainStyled>
+      {openModal && <Modal closeModal={setOpenModal} />}
     </div>
   );
 }
