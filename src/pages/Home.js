@@ -10,11 +10,15 @@ const MainStyled = styled.main`
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   row-gap: 3rem;
   overflow: hidden;
   margin-bottom: 5rem;
   animation: fadeIn 1s ease-in forwards;
+
+  button {
+    margin: 0 auto;
+  }
 
   .recipes {
     display: flex;
@@ -49,6 +53,7 @@ function Home() {
 
   // state for the modal
   const [openModal, setOpenModal] = useState(false);
+
 
   // Api ID and key for requesting recipes from the api
   const APP_ID = 'e7d8c517';
@@ -114,7 +119,13 @@ function Home() {
           }}
         />
       </MainStyled>
-      {openModal && <Modal closeModal={setOpenModal} />}
+      {openModal && <Modal
+          title="OOPS!"
+          body="Something went wrong. 
+          This could be a result of searching too quickly or no results were found. 
+          Please try again later or use another search term."
+          closeModal={setOpenModal}
+        />}
     </div>
   );
 }

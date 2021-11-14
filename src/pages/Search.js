@@ -66,6 +66,8 @@ function Search() {
   const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+
     if (location.state) {
       searchQuery = location.state.searchTerm;
 
@@ -99,7 +101,7 @@ function Search() {
     try {
       const response = await fetch(`https://api.edamam.com/api/recipes/v2?type=public&q=${query}&app_id=${APP_ID}&app_key=${APP_KEY}&health=vegetarian`);
       const data = await response.json();
-      if(data.hits.length === 0) {
+      if (data.hits.length === 0) {
         setResults('No results found. Please try again.');
       }
       setRecipes(data.hits);
@@ -130,7 +132,15 @@ function Search() {
           ))}
         </div>
       </MainStyled>
-      {openModal && <Modal closeModal={setOpenModal} />}
+      {openModal && (
+        <Modal
+          title="OOPS!"
+          body="Something went wrong. 
+          This could be a result of searching too quickly or no results were found. 
+          Please try again later or use another search term."
+          closeModal={setOpenModal}
+        />
+      )}
     </div>
   );
 }

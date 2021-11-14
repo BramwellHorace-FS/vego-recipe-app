@@ -64,15 +64,13 @@ const StyledModal = styled.div`
 `;
 
 
-export default function Modal({closeModal}) {
+export default function Modal({closeModal, title, body}) {
   return (
     <StyledModal>
       <div className="modal">
         <button className="closeBtn" onClick={()=> {closeModal(false)}}>X</button>
-        <h2>Error</h2>
-        <p>Sorry, we are unable to return results at this time.</p>
-        <p>This could be a result of searching too quickly or no results were found.</p>
-        <p>Please try again later or use another search term.</p>
+        <h2>{title}</h2>
+        <p>{body}</p>
         <Button click={()=>{closeModal(false)}} text="Ok" />
       </div>
     </StyledModal>
