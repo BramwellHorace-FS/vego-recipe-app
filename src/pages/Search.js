@@ -66,7 +66,7 @@ function Search() {
 
   const URL = `https://api.edamam.com/api/recipes/v2?type=public&q=${query}&app_id=${APP_ID}&app_key=${APP_KEY}&health=vegetarian`;
 
-  const { data: recipes, loading, error, setError } = useFetch(URL);
+  const { data: recipes, loading, error, setError } = useFetch(URL, query);
 
   useEffect(() => {
     window.scrollTo(0, 0);

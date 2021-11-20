@@ -43,15 +43,13 @@ const MainStyled = styled.main`
 function Home() {
   const [query, setQuery] = useState('popular');
   const [search, setSearch] = useState('');
-  const [openModal, setOpenModal] = useState(false);
-
 
   let history = useHistory();
   const APP_ID = 'e7d8c517';
   const APP_KEY = '8aa35c072a105b7ce520481ea77454d7';
   const URL = `https://api.edamam.com/api/recipes/v2?type=public&q=${query}&app_id=${APP_ID}&app_key=${APP_KEY}&health=vegetarian`;
 
-  const { data: recipes, loading, error, setError } = useFetch(URL);
+  const { data: recipes, loading, error, setError } = useFetch(URL, query);
 
   // update search
   const updateSearch = (e) => {

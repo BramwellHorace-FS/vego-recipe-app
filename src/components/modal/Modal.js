@@ -25,7 +25,7 @@ const StyledModal = styled.div`
     height: auto;
     background-color: #fff;
     border-radius: 0.5rem;
-    padding: 1.5rem;
+    padding: 1.8rem;
     box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5);
     display: flex;
     flex-direction: column;
@@ -37,8 +37,8 @@ const StyledModal = styled.div`
 
   .closeBtn {
     position: absolute;
-    top: 1.5rem;
-    right: 1.5rem;
+    top: 1rem;
+    right: 1rem;
     font-size: 1.5rem;
     cursor: pointer;
     background-color: transparent;
