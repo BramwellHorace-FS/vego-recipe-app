@@ -31,7 +31,7 @@ const Header = () => {
     <StyledHeader>
       <div className="container-fluid">
         {/* application logo */}
-        <a href="/" className="logo">
+        <a href="https://bramwellhorace-fs.github.io/vego-recipe-app" className="logo">
           <h1>Vego</h1>
         </a>
         {/* navigation links & offcanvas menu */}

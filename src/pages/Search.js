@@ -104,8 +104,7 @@ function Search() {
       <MainStyled>
         {loading && <p className="loading">Loading recipes...</p>}
         <div className="recipes">
-          {recipes &&
-            recipes.hits.map((recipe, i) => (
+          {recipes && recipes.hits.map((recipe, i) => (
               <Card
                 title={recipe.recipe.label}
                 image={recipe.recipe.image}
