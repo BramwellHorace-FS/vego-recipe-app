@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router';
+import { useFetch } from '../hooks/useFetch';
 import Hero from '../components/hero/Hero';
 import Card from '../components/card/Card';
 import Button from '../components/button/Button';
@@ -40,36 +41,24 @@ const MainStyled = styled.main`
 
 // Homepage component for the application
 function Home() {
-  let history = useHistory();
-
-  // state for recipes
-  const [recipes, setRecipes] = useState([]);
-
-  // state for gathering search input
+  const [query, setQuery] = useState('popular');
   const [search, setSearch] = useState('');
-
-  // state for gathering the search results
-  const [query, setQuery] = useState('');
-
-  // state for the modal
   const [openModal, setOpenModal] = useState(false);
 
 
-  // Api ID and key for requesting recipes from the api
+  let history = useHistory();
   const APP_ID = 'e7d8c517';
   const APP_KEY = '8aa35c072a105b7ce520481ea77454d7';
+  const URL = `https://api.edamam.com/api/recipes/v2?type=public&q=${query}&app_id=${APP_ID}&app_key=${APP_KEY}&health=vegetarian`;
 
-  // function to get recipes from the api when the search button is clicked
-  useEffect(() => {
-    getRecipes();
-  }, [query]);
+  const { data: recipes, loading, error, setError } = useFetch(URL);
 
-  // function used to get search inputs from the user on change
+  // update search
   const updateSearch = (e) => {
     setSearch(e.target.value);
   };
 
-  // function used to set the search query to the search input
+  // update query
   const getSearch = (e) => {
     e.preventDefault();
     setQuery(search);
@@ -83,49 +72,35 @@ function Home() {
   };
 
 
-  // function used to get recipes from the api
-  const getRecipes = async () => {
-    try {
-      const response = await fetch(`https://api.edamam.com/api/recipes/v2?type=public&q=${query}&app_id=${APP_ID}&app_key=${APP_KEY}&health=vegetarian`);
-      const data = await response.json();
-      setRecipes(data.hits);
-    } catch (error) {
-      setOpenModal(true);
-    }
-  };
-
   return (
     <div className="container-fluid">
-      <Hero func={getSearch} value={search} update={updateSearch} />
-      <MainStyled>
-        <h4>Recipes of The Day</h4>
-        <div className="recipes">
-          {recipes.slice(0,8).map((recipe, i) => (
-            <Card
-              title={recipe.recipe.label}
-              image={recipe.recipe.image}
-              type={recipe.recipe.mealType}
-              time={recipe.recipe.totalTime}
-              url={recipe.recipe.url}
-              ingredients={recipe.recipe.ingredientLines}
-              key={i}
+      <div className="container-fluid">
+        <Hero func={getSearch} value={search} update={updateSearch} />
+        <MainStyled>
+          {error && (
+            <Modal
+              title="Something Went Wrong!"
+              body="This could be a result of searching too quickly or no results were found.
+              Please try again after 1 minute or try another search term."
+              closeModal={setError}
             />
-          ))}
-        </div>
-        <Button
+          )}
+          <h4>Most Popular Recipes</h4>
+          {loading && <p>Loading recipes...</p>}
+          <div className="recipes">
+            {recipes &&
+              recipes.hits.map((recipe, i) => (
+                <Card key={i} image={recipe.recipe.image} title={recipe.recipe.label} time={recipe.recipe.totalTime} type={recipe.recipe.mealType} url={recipe.recipe.url} />
+              ))}
+          </div>
+          <Button
           text="Explore more recipes"
           click={() => {
             history.push('/search');
           }}
         />
-      </MainStyled>
-      {openModal && <Modal
-          title="OOPS!"
-          body="Something went wrong. 
-          This could be a result of searching too quickly or no results were found. 
-          Please try again later or use another search term."
-          closeModal={setOpenModal}
-        />}
+        </MainStyled>
+      </div>
     </div>
   );
 }

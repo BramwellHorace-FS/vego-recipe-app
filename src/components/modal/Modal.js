@@ -15,6 +15,7 @@ const StyledModal = styled.div`
   align-items: center;
   overflow: auto;
 
+
   &.hidden {
     display: none;
   }
@@ -65,13 +66,15 @@ const StyledModal = styled.div`
 
 
 export default function Modal({closeModal, title, body}) {
+
+
   return (
-    <StyledModal>
+    <StyledModal >
       <div className="modal">
-        <button className="closeBtn" onClick={()=> {closeModal(false)}}>X</button>
+        <button className="closeBtn" onClick={() => {closeModal(null)}}>X</button>
         <h2>{title}</h2>
         <p>{body}</p>
-        <Button click={()=>{closeModal(false)}} text="Ok" />
+        <Button text="Ok" click={() => {closeModal(null)}} />
       </div>
     </StyledModal>
   );

@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import { useFetch } from '../hooks/useFetch';
 import Form from '../components/form/Form';
 import Card from '../components/card/Card';
 import styled from 'styled-components';
@@ -14,6 +15,10 @@ const MainStyled = styled.main`
   height: 100%;
   min-height: 100vh;
   animation: fadeIn 1s ease-in forwards;
+
+  .loading {
+    margin-top: 3rem;
+  }
 
   .recipes {
     display: flex;
@@ -47,10 +52,7 @@ function Search() {
   const APP_ID = 'e7d8c517';
   const APP_KEY = '8aa35c072a105b7ce520481ea77454d7';
 
-  const firstRender = useRef(true);
-
   let location = useLocation();
-
   let searchQuery = '';
 
   // Location state is not empty set the search query to the location state
@@ -58,31 +60,27 @@ function Search() {
     searchQuery = location.state.searchTerm;
   }
 
-  // State for the search results
-  const [recipes, setRecipes] = useState([]);
   const [search, setSearch] = useState('');
   const [query, setQuery] = useState(searchQuery);
   const [results, setResults] = useState('Search our collection of plant-based recipes.');
-  const [openModal, setOpenModal] = useState(false);
+
+  const URL = `https://api.edamam.com/api/recipes/v2?type=public&q=${query}&app_id=${APP_ID}&app_key=${APP_KEY}&health=vegetarian`;
+
+  const { data: recipes, loading, error, setError } = useFetch(URL);
 
   useEffect(() => {
     window.scrollTo(0, 0);
 
-    if (location.state) {
-      searchQuery = location.state.searchTerm;
-
-      getRecipes();
-    } else if (firstRender.current) {
-      firstRender.current = false;
-      return;
-    } else if (firstRender.current === false) {
-      getRecipes();
+    if (recipes) {
+      if (recipes.hits.length === 0) {
+        setResults('No recipes found. Please try again.');
+      } else {
+        setResults(`Search results for ${query}`);
+      }
+    } else {
+      setResults('Search our collection of plant-based recipes.');
     }
-
-    if (query !== '') {
-      setResults(`Search results for "${query}"`);
-    }
-  }, [query]);
+  }, [recipes]);
 
   // update search
   const updateSearch = (e) => {
@@ -96,20 +94,6 @@ function Search() {
     setSearch('');
   };
 
-  // fetch the search results
-  const getRecipes = async () => {
-    try {
-      const response = await fetch(`https://api.edamam.com/api/recipes/v2?type=public&q=${query}&app_id=${APP_ID}&app_key=${APP_KEY}&health=vegetarian`);
-      const data = await response.json();
-      if (data.hits.length === 0) {
-        setResults('No results found. Please try again.');
-      }
-      setRecipes(data.hits);
-    } catch (error) {
-      setOpenModal(true);
-    }
-  };
-
   return (
     <div className="container-fluid">
       <StyledHeader>
@@ -118,27 +102,28 @@ function Search() {
       </StyledHeader>
       <Form func={getSearch} value={search} update={updateSearch} />
       <MainStyled>
+        {loading && <p className="loading">Loading recipes...</p>}
         <div className="recipes">
-          {recipes.map((recipe, i) => (
-            <Card
-              title={recipe.recipe.label}
-              image={recipe.recipe.image}
-              type={recipe.recipe.mealType}
-              time={recipe.recipe.totalTime}
-              url={recipe.recipe.url}
-              ingredients={recipe.recipe.ingredientLines}
-              key={i}
-            />
-          ))}
+          {recipes &&
+            recipes.hits.map((recipe, i) => (
+              <Card
+                title={recipe.recipe.label}
+                image={recipe.recipe.image}
+                type={recipe.recipe.mealType}
+                time={recipe.recipe.totalTime}
+                url={recipe.recipe.url}
+                ingredients={recipe.recipe.ingredientLines}
+                key={i}
+              />
+            ))}
         </div>
       </MainStyled>
-      {openModal && (
+      {error && (
         <Modal
-          title="OOPS!"
-          body="Something went wrong. 
-          This could be a result of searching too quickly or no results were found. 
-          Please try again later or use another search term."
-          closeModal={setOpenModal}
+          title="Something Went Wrong!"
+          body="This could be a result of searching too quickly or no results were found.
+          Please try again after 1 minute or try another search term."
+          closeModal={setError}
         />
       )}
     </div>
