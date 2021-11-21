@@ -1,6 +1,7 @@
 /* Imports */
 @import url('http://fonts.cdnfonts.com/css/codec-pro');
 @import url('http://fonts.cdnfonts.com/css/dinroundpro-medi');
+@import url('https://fonts.googleapis.com/css2?family=Days+One&family=Questrial&display=swap');
 
 /* Defaults */
 * {
@@ -10,7 +11,7 @@
 }
 
 body {
-  font-family: 'Codec Pro', sans-serif;
+  font-family: 'Questrial', sans-serif;
   font-size: 62.5%;
   background: #f2f3f1;
   height: 100%;
@@ -23,8 +24,8 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: 'DINRoundPro-Bold', sans-serif;
-  font-weight: normal;
+  font-family: 'Days One', sans-serif;
+  font-weight: 400;
 }
 
 h1 {

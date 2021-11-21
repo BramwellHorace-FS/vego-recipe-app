@@ -15,6 +15,7 @@ const MainStyled = styled.main`
   height: 100%;
   min-height: 100vh;
   animation: fadeIn 1s ease-in forwards;
+  
 
   .loading {
     margin-top: 3rem;
