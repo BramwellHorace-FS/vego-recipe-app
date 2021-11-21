@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/vego-recipe-app/static/css/main.5451e346.chunk.css",
+    "main.js": "/vego-recipe-app/static/js/main.d6d9ee67.chunk.js",
+    "main.js.map": "/vego-recipe-app/static/js/main.d6d9ee67.chunk.js.map",
+    "runtime-main.js": "/vego-recipe-app/static/js/runtime-main.e02ec210.js",
+    "runtime-main.js.map": "/vego-recipe-app/static/js/runtime-main.e02ec210.js.map",
+    "static/js/2.16b6e284.chunk.js": "/vego-recipe-app/static/js/2.16b6e284.chunk.js",
+    "static/js/2.16b6e284.chunk.js.map": "/vego-recipe-app/static/js/2.16b6e284.chunk.js.map",
+    "static/js/3.0ecaf52a.chunk.js": "/vego-recipe-app/static/js/3.0ecaf52a.chunk.js",
+    "static/js/3.0ecaf52a.chunk.js.map": "/vego-recipe-app/static/js/3.0ecaf52a.chunk.js.map",
+    "index.html": "/vego-recipe-app/index.html",
+    "static/css/main.5451e346.chunk.css.map": "/vego-recipe-app/static/css/main.5451e346.chunk.css.map",
+    "static/js/2.16b6e284.chunk.js.LICENSE.txt": "/vego-recipe-app/static/js/2.16b6e284.chunk.js.LICENSE.txt",
+    "static/media/plate.1bdd0f6d.png": "/vego-recipe-app/static/media/plate.1bdd0f6d.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.e02ec210.js",
+    "static/js/2.16b6e284.chunk.js",
+    "static/css/main.5451e346.chunk.css",
+    "static/js/main.d6d9ee67.chunk.js"
+  ]
+}
